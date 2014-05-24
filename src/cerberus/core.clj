@@ -1,9 +1,8 @@
 (ns cerberus.core
-    (:use [lamina.core]
-          [aleph.http]
-          [carica.core])
+    (:use [carica.core])
     (:require [compojure.core :refer :all]
               [compojure.route :as route]
+              [clj-http.client :as client]
               [com.duelinmarkers.ring-request-logging :refer [wrap-request-logging]]
               ))
 
@@ -23,17 +22,15 @@
         (int end)))
 
 
-(defn handler [response-channel request]
+(defn handler [request]
   (let [new-request (merge request (get backends 0))]
       (swap! request-save :request new-request)
-      (enqueue response-channel
-        (http-request new-request))))
+      (client/request new-request)))
 
 (defroutes app-routes
-  (ANY "/*" [] (wrap-aleph-handler handler))
+  (ANY "/*" [:as req] (handler req))
   (route/not-found "Page not found"))
 
-(defn -main [& args] 
-    (start-http-server 
-        (wrap-ring-handler app-routes) {:port 8080}))
-        ; (wrap-request-logging (wrap-ring-handler app-routes)) {:port 8080}))
+(def app
+  (-> (routes app-routes)
+      (wrap-request-logging)))

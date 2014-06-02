@@ -1,5 +1,16 @@
-{:backends [{:remote-addr "127.0.0.1" :server-port 5000}
-            {:remote-addr "127.0.0.1" :server-port 5000}
-            {:remote-addr "127.0.0.1" :server-port 5000}
-            {:remote-addr "127.0.0.1" :server-port 5000}]
+{:routes [{:route "/api2"
+           :re-write {:match "/api2" :replace ""} 
+           :method: "GET" 
+           :backends [{:remote-addr "127.0.0.1" :server-port 5000}
+                        {:remote-addr "127.0.0.1" :server-port 5000}
+                        {:remote-addr "127.0.0.1" :server-port 5000}
+                        {:remote-addr "127.0.0.1" :server-port 5000}]}
+           {:route "/api"
+            :re-write {:match "/api2" :replace ""}
+            :method: "GET" 
+            :backends [{:remote-addr "127.0.0.1" :server-port 6000}
+                        {:remote-addr "127.0.0.1" :server-port 6000}
+                        {:remote-addr "127.0.0.1" :server-port 6000}
+                        {:remote-addr "127.0.0.1" :server-port 6000}]}
+    ]                       
 }

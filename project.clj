@@ -7,6 +7,7 @@
                   [co.paralleluniverse/pulsar "0.5.0"]
                   [compojure "1.1.6"]
                   [ring-server "0.3.0"]
+                  [ring "1.3.0-RC1"]
                   [sonian/carica "1.1.0"]
                   [clj-http "0.9.1"]
                   [com.duelinmarkers/ring-request-logging "0.2.0"]]

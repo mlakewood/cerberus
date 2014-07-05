@@ -4,8 +4,6 @@
               [compojure.route :as route]
               [ring.adapter.jetty :as jetty]
               [clj-http.client :as client]
-              [co.paralleluniverse.pulsar.core :as pulsar-core]
-              [co.paralleluniverse.pulsar.actors :as pulsar-actors]
               [com.duelinmarkers.ring-request-logging :refer [wrap-request-logging]]
               ))
 

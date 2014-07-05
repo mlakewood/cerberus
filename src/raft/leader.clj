@@ -1,8 +1,6 @@
-(ns raft.leader
-    (:require [raft.config :as config)) 
+(ns raft.leader)
 
 
-(def config (atom {}))
 
 
 

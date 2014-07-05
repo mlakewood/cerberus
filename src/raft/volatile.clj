@@ -16,7 +16,7 @@
 (defn become-leader []
     (reset! state {:leader true :candidate false :follower false}))
 
-(defn become-candiate []
+(defn become-candidate []
     (reset! state {:leader false :candidate true :follower false}))
 
 (defn become-follower []

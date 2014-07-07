@@ -3,26 +3,6 @@
               [clojure.edn :as edn])
     (:import [java.io PushbackReader]))
 
-(defrecord LogEntry [index term payload])
-(defrecord Persistent [id term voted-for log])
-
-(def edn-readers {'raft.persistent.Persistent map->Persistent
-                  'raft.persistent.LogEntry map->LogEntry})
-
-
-
-;; The Log Protocol which is part of the persistent data
-(defprotocol Log
-    "Protocol for defining the log"
-    (append-log [entry prev log] "Append an entry to the log"))
-
-(extend-protocol Log
-    LogEntry
-    (append-log [entry prev log]
-        (if (every? true? (map = prev (last log)))
-            (conj log entry)
-            nil))
-)
 
 
 ;; Define the operations on the Persistent Data
@@ -39,7 +19,7 @@
 
 (extend-protocol PersistentData
     Persistent
-    (read-stored-data [file-name]
+    (read-stored-data [store file-name]
         (with-open [r (io/reader file-name)]
             (edn/read {:readers edn-readers} (PushbackReader. r))))
 
@@ -77,3 +57,5 @@
                 nil)))
 )
 
+(defn persistent-factory []
+  true)

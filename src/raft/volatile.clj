@@ -13,6 +13,10 @@
 
 (def state (atom {:leader false :candidate false :follower false}))
 
+{:leader}
+{:candidate}
+{:follower}
+
 (defn become-leader []
     (reset! state {:leader true :candidate false :follower false}))
 

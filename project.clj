@@ -11,6 +11,7 @@
                   [sonian/carica "1.1.0"]
                   [clj-http "0.9.1"]
                   [org.zeromq/jeromq "0.3.4"]
+                  [com.stuartsierra/component "0.2.1"]
                   [com.duelinmarkers/ring-request-logging "0.2.0"]]
     :plugins [[lein-ring "0.8.7"]
               [lein-midje "3.1.1"]]

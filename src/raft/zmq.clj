@@ -2,27 +2,32 @@
   (:import [org.zeromq ZMQ])
   (:require (cheshire [core :as c])))
 
-(def ctx (ZMQ/context 1))
-
 (defn get-zctx []
-    ctx)
+    (ZMQ/context 1))
 
-(def zsocket (.socket (get-zctx) ZMQ/REP))
+(defn get-rep-socket [address]
+   (let [sock (.socket (get-zctx) ZMQ/REP)]
+     (.bind sock address)
+     sock))
 
-(def zbound (.bind zsocket "tcp://127.0.01:5555"))
+(defn get-req-socket [address]
+   (let [sock (.socket (get-zctx) ZMQ/REQ)]
+     (.connect sock address)
+     sock))
 
 
 (defn echo-server
   []
-  (let [s (.socket ctx ZMQ/REP)]
+  (let [s (.socket get-zctx ZMQ/REP)]
     (.bind s "tcp://127.0.01:5555")
     (loop [msg (.recv s)]
+      (println "got a message")
       (.send s msg)
       (recur (.recv s)))))
 
 (defn echo
   [msg]
-  (let [s (.socket ctx ZMQ/REQ)]
+  (let [s (.socket get-zctx ZMQ/REQ)]
     (.connect s "tcp://127.0.01:5555")
     (.send s msg)
     (println "Server replied:" (String. (.recv s)))

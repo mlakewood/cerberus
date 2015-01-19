@@ -1,1 +1,1 @@
-#raft.persistent.Persistent{:id "food", :term 0, :voted-for nil, :log [#raft.persistent.LogEntry{:index 1, :term 0, :payload "foobar"} #raft.persistent.LogEntry{:index 2, :term 0, :payload "foobar"} #raft.persistent.LogEntry{:index 3, :term 0, :payload "foobarbaz"}]}
+#raft.persistent.Persistent{:id 2, :term 0, :voted-for nil, :log []}
